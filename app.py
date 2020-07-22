@@ -109,7 +109,7 @@ def register_user():
         if 'photos' in request.files:
             uploaded_images = request.files.getlist('photos')
             save_images_to_folder(uploaded_images, newuser)
-        return jsonify({'status' : 'success', 'user' :  user_schema.dump(newuser).data })
+        return jsonify({'status' : 'success', 'user' :  user_schema.dump(newuser) })
 
 #function to save images to image directory
 def save_images_to_folder(images_to_save, user):
@@ -163,6 +163,7 @@ def train_model():
         data.save(models_folder + filename + '.sframe')
 
         result_data = tc.SFrame( models_folder + filename +'.sframe')
+        print(result_data)
         train_data = result_data.random_split(0.8)
 
         #the next line starts the training process
